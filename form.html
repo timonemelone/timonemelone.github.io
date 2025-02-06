@@ -87,7 +87,10 @@
     .bar-container {
       display: flex;
       align-items: center;
-      /* Kein margin-left mehr, da die Ausrichtung linksbündig erfolgen soll */
+      justify-content: flex-start;
+      width: flex;
+      margin-left: 0;
+      padding-right: 40px; /* Puffer zwischen Balken und Container-Außenkante */
     }
     .bar {
       flex: none;             /* Keine automatische Anpassung */
