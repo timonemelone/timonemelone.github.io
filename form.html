@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <!-- Für responsives Design -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>15 Ja-Nein Fragen</title>
+  <!-- Google Font Montserrat -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,800&display=swap" rel="stylesheet">
+  <style>
+    /* Basis-Stile und Farbkonzept */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #FFF8F8; /* Off-White */
+      color: #333333; /* Anthrazit */
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 600px;
+      width: 90%;
+      background: #FFF8F8;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h2 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #D32F2F; /* Kräftiges Rot */
+      margin-bottom: 20px;
+    }
+    /* Der statische Teil ("Frage ") bleibt unverändert */
+    #static-label { }
+    .hidden {
+      display: none;
+    }
+    .question-container,
+    .result-container {
+      margin: 20px 0;
+    }
+    .btn {
+      padding: 10px 20px;
+      margin: 10px 5px;
+      background: linear-gradient(45deg, #D32F2F, #8B0000);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background: linear-gradient(45deg, #8B0000, #D32F2F);
+    }
+    .btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .chart {
+      margin-bottom: 30px; /* Abstand zwischen den einzelnen Paaren */
+      animation: fadeIn 0.5s ease;
+      text-align: left; /* Linksbündige Ausrichtung der Diagramme */
+    }
+    /* --- Styles für den Balkenaufbau mit Logo oben --- */
+    .bar-header {
+      width: 281px;           /* Feste Breite, damit alle Logo-Container gleich groß sind */
+      margin-bottom: 5px;     /* Geringer Abstand zwischen Logo und Balken */
+      text-align: left;       /* Linksbündig */
+    }
+    .bar-icon {
+      max-height: 50px;       /* Feste Höhe für alle Logos */
+      display: block;
+    }
+    /* Balkencontainer: Logo und Balken+Wert gehören zusammen */
+    .bar-item {
+      display: flex;
+      align-items: flex-start; /* Elemente am oberen Rand ausrichten */
+    }
+    /* Hier erscheint das Logo oben – da wir keinen horizontalen Layout-Container mehr brauchen, nutzen wir den Header separat */
+    .bar-container {
+      display: flex;
+      align-items: center;
+      /* Kein margin-left mehr, da die Ausrichtung linksbündig erfolgen soll */
+    }
+    .bar {
+      flex: none;             /* Keine automatische Anpassung */
+      height: 20px;
+      border-radius: 4px;
+      width: 0;               /* Startbreite wird später direkt gesetzt */
+      transition: none;       /* Keine Transition – sofortiger Wert */
+    }
+    .bar-value {
+      margin-left: 10px;
+      font-weight: 600;
+      min-width: 40px;
+      text-align: right;
+    }
+    /* --- Animationen für den Übergang zur Ergebnisübersicht --- */
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    .fade-out {
+      animation: fadeOut 0.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to   { opacity: 0; }
+    }
+    /* --- Animationen für die Nummer (Flughafentafel-Effekt) --- */
+    @keyframes flipOut {
+      0%   { transform: rotateX(0deg); opacity: 1; }
+      100% { transform: rotateX(90deg); opacity: 0; }
+    }
+    @keyframes flipIn {
+      0%   { transform: rotateX(90deg); opacity: 0; }
+      100% { transform: rotateX(0deg); opacity: 1; }
+    }
+    .flip-out {
+      animation: flipOut 0.5s ease forwards;
+    }
+    .flip-in {
+      animation: flipIn 0.5s ease forwards;
+    }
+    /* --- Animationen für den Fragetext --- */
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to   { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideInLeft {
+      from { transform: translateX(-100%); opacity: 0; }
+      to   { transform: translateX(0); opacity: 1; }
+    }
+    .slide-in-right {
+      animation: slideInRight 0.5s ease forwards;
+    }
+    .slide-in-left {
+      animation: slideInLeft 0.5s ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Fragebereich (statische Buttons und "Frage" bleiben unverändert) -->
+    <div id="question-container" class="question-container">
+      <h2>
+        <span id="static-label">Frage </span>
+        <span id="question-number">1:</span>
+        <br>
+        <span id="question-text">Ist dies Ihre erste Frage?</span>
+      </h2>
+      <div>
+        <button id="back-button" class="btn">Zurück</button>
+        <button id="yes-button" class="btn">Ja</button>
+        <button id="no-button" class="btn">Nein</button>
+      </div>
+    </div>
+    
+    <!-- Ergebnisübersicht – Überschrift einheitlich "Ergebnis" -->
+    <div id="result-ja" class="result-container hidden">
+      <h2>Ergebnis</h2>
+      <div id="chart-container-ja"></div>
+      <button id="restart-button-ja" class="btn">Zurück</button>
+    </div>
+    
+    <!-- Ergebnisübersicht – Überschrift einheitlich "Ergebnis" -->
+    <div id="result-no" class="result-container hidden">
+      <h2>Ergebnis</h2>
+      <div id="chart-container-no"></div>
+      <button id="restart-button-no" class="btn">Zurück</button>
+    </div>
+  </div>
+  
+  <script>
+    /* Fragen als Objekte mit Nummer und Text */
+    const questions = [
+      { number: "1:",  text: "Ist dies Ihre erste Frage?" },
+      { number: "2:",  text: "Mögen Sie JavaScript?" },
+      { number: "3:",  text: "Ist HTML eine Auszeichnungssprache?" },
+      { number: "4:",  text: "Arbeiten Sie gerne im Web?" },
+      { number: "5:",  text: "Ist CSS wichtig für das Design?" },
+      { number: "6:",  text: "Kennen Sie sich mit DOM aus?" },
+      { number: "7:",  text: "Ist Responsive Design relevant?" },
+      { number: "8:",  text: "Haben Sie schon einmal eine Website erstellt?" },
+      { number: "9:",  text: "Sind Sie mit Frontend-Technologien vertraut?" },
+      { number: "10:", text: "Nutzen Sie Browser-Entwicklertools?" },
+      { number: "11:", text: "Möchten Sie mehr über Webentwicklung erfahren?" },
+      { number: "12:", text: "Ist JavaScript vielseitig einsetzbar?" },
+      { number: "13:", text: "Lieben Sie interaktive Webseiten?" },
+      { number: "14:", text: "Wollen Sie Ihr Wissen testen?" },
+      { number: "15:", text: "Sind Sie zufrieden mit Ihren Antworten?" }
+    ];
+    
+    /* Konfiguration für die Balken – leicht anpassbar.
+       Optional kann in jedem Objekt eine Eigenschaft "icon" (URL zu einem PNG) angegeben werden.
+       In dieser Version erscheinen die Logos über dem Balken. Zwischen dem Logo und dem Balken beträgt der Abstand nur 5px,
+       und zwischen den einzelnen Paaren (Logo+Balken) wird ein Abstand von 30px eingefügt.
+       Die Ausrichtung erfolgt linksbündig.
+    */
+    const barsConfigJa = [
+      { label: "Die Linke", value: 100, color: "#ff0000", icon: "media/linke.png" },
+      { label: "Bündnis 90 / Die Grünen", value: 35, color: "#008000", icon: "media/gruene.png" },
+      { label: "SPD", value: 15, color: "#8B0000", icon: "media/spd.png" },
+      { label: "BSW", value: 0, color: "#7b2450", icon: "media/bsw.png" },
+      { label: "FDP", value: 0, color: "#ffff00", icon: "media/fdp.png" },
+      { label: "Union", value: 0, color: "#000000", icon: "media/union.png" },
+      { label: "AfD", value: 0, color: "#0000ff", icon: "media/afd.png" }
+    ];
+    
+    const barsConfigNo = [
+      { label: "Afd", value: 100, color: "#0000ff", icon: "media/afd.png" },
+      { label: "Union", value: 88, color: "#000000", icon: "media/union.png" },
+      { label: "FDP", value: 80, color: "#ffff00", icon: "media/fdp.png" },
+      { label: "BSW", value: 75, color: "#7b2450", icon: "media/bsw.png" },
+      { label: "SPD", value: 30, color: "#8B0000", icon: "media/spd.png" },
+      { label: "Bündnis 90 / Die Grünen", value: 15, color: "#008000", icon: "media/gruene.png" },
+      { label: "Die Linke", value: 0, color: "#ff0000", icon: "media/linke.png" }
+    ];
+    
+    let currentQuestion = 0;
+    
+    // Referenzen zu DOM-Elementen
+    const questionNumberEl = document.getElementById('question-number');
+    const questionTextEl   = document.getElementById('question-text');
+    const questionContainer = document.getElementById('question-container');
+    const yesButton   = document.getElementById('yes-button');
+    const noButton    = document.getElementById('no-button');
+    const backButton  = document.getElementById('back-button');
+    const resultJa    = document.getElementById('result-ja');
+    const resultNo    = document.getElementById('result-no');
+    const chartContainerJa = document.getElementById('chart-container-ja');
+    const chartContainerNo = document.getElementById('chart-container-no');
+    const restartButtonJa  = document.getElementById('restart-button-ja');
+    const restartButtonNo  = document.getElementById('restart-button-no');
+    
+    /* Funktion: Animiert den Wechsel der Nummer (Flip-Effekt) */
+    function animateQuestionNumber(newNumber) {
+      questionNumberEl.classList.remove('flip-in', 'flip-out');
+      questionNumberEl.classList.add('flip-out');
+      questionNumberEl.addEventListener('animationend', function handler(e) {
+        if (e.animationName === 'flipOut') {
+          questionNumberEl.textContent = newNumber;
+          questionNumberEl.classList.remove('flip-out');
+          questionNumberEl.classList.add('flip-in');
+          questionNumberEl.removeEventListener('animationend', handler);
+          questionNumberEl.addEventListener('animationend', function handlerIn(e2) {
+            if (e2.animationName === 'flipIn') {
+              questionNumberEl.classList.remove('flip-in');
+              questionNumberEl.removeEventListener('animationend', handlerIn);
+            }
+          });
+        }
+      });
+    }
+    
+    /* Funktion: Animiert den Fragetext (Slide-In je nach Richtung) */
+    function animateQuestionText(newText, direction) {
+      questionTextEl.classList.remove('slide-in-right', 'slide-in-left');
+      void questionTextEl.offsetWidth;
+      questionTextEl.textContent = newText;
+      if (direction === 'forward') {
+        questionTextEl.classList.add('slide-in-right');
+      } else if (direction === 'backward') {
+        questionTextEl.classList.add('slide-in-left');
+      }
+    }
+    
+    /* Funktion: Wechselt zur neuen Frage mit Animationen */
+    function changeQuestion(newIndex, direction) {
+      animateQuestionNumber(questions[newIndex].number);
+      animateQuestionText(questions[newIndex].text, direction);
+      currentQuestion = newIndex;
+      backButton.disabled = (currentQuestion === 0);
+    }
+    
+    /* Übergang zu den Ergebnisübersichten (Fragenbereich ausblenden, dann Übersicht einblenden) */
+    function transitionToResult(resultContainer, populateResultCallback) {
+      questionContainer.classList.add('fade-out');
+      questionContainer.addEventListener('animationend', function handler(e) {
+        if(e.animationName === 'fadeOut') {
+          questionContainer.classList.add('hidden');
+          questionContainer.classList.remove('fade-out');
+          resultContainer.classList.remove('hidden');
+          resultContainer.classList.add('fade-in');
+          populateResultCallback();
+          questionContainer.removeEventListener('animationend', handler);
+        }
+      });
+    }
+    
+    /* Erzeugt die Diagrammbalken für das Ja-Ergebnis mithilfe der Konfiguration.
+       Die Logos erscheinen oben (über dem Balken) in einem Container mit 281px Breite und 5px Abstand zum Balken.
+       Zwischen den einzelnen Diagrammen beträgt der Abstand 30px.
+       Die Elemente sind linksbündig ausgerichtet.
+    */
+    function populateResultJa() {
+      chartContainerJa.innerHTML = '';
+      barsConfigJa.forEach(config => {
+        const chartItem = document.createElement('div');
+        chartItem.classList.add('chart');
+    
+        // Header: Logo oben, linksbündig
+        const headerContainer = document.createElement('div');
+        headerContainer.classList.add('bar-header');
+        headerContainer.style.width = '281px';
+        headerContainer.style.margin = '0 0 5px 0'; // 5px Abstand zwischen Logo und Balken
+        headerContainer.style.textAlign = 'left';
+        if (config.icon) {
+          const iconImg = document.createElement('img');
+          iconImg.classList.add('bar-icon');
+          iconImg.src = config.icon;
+          iconImg.style.maxHeight = '50px';
+          iconImg.style.display = 'block';
+          iconImg.style.margin = '0';
+          headerContainer.appendChild(iconImg);
+        }
+        chartItem.appendChild(headerContainer);
+    
+        // Balkencontainer: Balken und Prozentwert (linksbündig)
+        const barContainer = document.createElement('div');
+        barContainer.classList.add('bar-container');
+        barContainer.style.display = 'flex';
+        barContainer.style.alignItems = 'center';
+        barContainer.style.justifyContent = 'flex-start';
+    
+        const barEl = document.createElement('div');
+        barEl.classList.add('bar');
+        barEl.style.backgroundColor = config.color;
+        barEl.style.width = config.value + '%';
+    
+        const valueEl = document.createElement('span');
+        valueEl.classList.add('bar-value');
+        valueEl.textContent = config.value + "%";
+    
+        barContainer.appendChild(barEl);
+        barContainer.appendChild(valueEl);
+        chartItem.appendChild(barContainer);
+    
+        chartContainerJa.appendChild(chartItem);
+      });
+    }
+    
+    /* Erzeugt die Diagrammbalken für das Nein-Ergebnis mithilfe der Konfiguration */
+    function populateResultNo() {
+      chartContainerNo.innerHTML = '';
+      barsConfigNo.forEach(config => {
+        const chartItem = document.createElement('div');
+        chartItem.classList.add('chart');
+    
+        const headerContainer = document.createElement('div');
+        headerContainer.classList.add('bar-header');
+        headerContainer.style.width = '281px';
+        headerContainer.style.margin = '0 0 5px 0';
+        headerContainer.style.textAlign = 'left';
+        if (config.icon) {
+          const iconImg = document.createElement('img');
+          iconImg.classList.add('bar-icon');
+          iconImg.src = config.icon;
+          iconImg.style.maxHeight = '50px';
+          iconImg.style.display = 'block';
+          iconImg.style.margin = '0';
+          headerContainer.appendChild(iconImg);
+        }
+        chartItem.appendChild(headerContainer);
+    
+        const barContainer = document.createElement('div');
+        barContainer.classList.add('bar-container');
+        barContainer.style.display = 'flex';
+        barContainer.style.alignItems = 'center';
+        barContainer.style.justifyContent = 'flex-start';
+    
+        const barEl = document.createElement('div');
+        barEl.classList.add('bar');
+        barEl.style.backgroundColor = config.color;
+        barEl.style.width = config.value + '%';
+    
+        const valueEl = document.createElement('span');
+        valueEl.classList.add('bar-value');
+        valueEl.textContent = config.value + "%";
+    
+        barContainer.appendChild(barEl);
+        barContainer.appendChild(valueEl);
+        chartItem.appendChild(barContainer);
+        chartContainerNo.appendChild(chartItem);
+      });
+    }
+    
+    yesButton.addEventListener('click', function() {
+      if (currentQuestion === questions.length - 1) {
+        transitionToResult(resultJa, populateResultJa);
+      } else {
+        changeQuestion(currentQuestion + 1, "forward");
+      }
+    });
+    
+    backButton.addEventListener('click', function() {
+      if (currentQuestion > 0) {
+        changeQuestion(currentQuestion - 1, "backward");
+      }
+    });
+    
+    noButton.addEventListener('click', function() {
+      transitionToResult(resultNo, populateResultNo);
+    });
+    
+    function restartQuiz() {
+      currentQuestion = 0;
+      questionNumberEl.textContent = questions[0].number;
+      questionTextEl.textContent   = questions[0].text;
+      backButton.disabled = true;
+      resultJa.classList.add('hidden');
+      resultNo.classList.add('hidden');
+      questionContainer.classList.remove('hidden');
+      questionContainer.classList.remove('fade-out');
+      questionContainer.classList.add('fade-in');
+    }
+    
+    restartButtonJa.addEventListener('click', restartQuiz);
+    restartButtonNo.addEventListener('click', restartQuiz);
+  </script>
+</body>
+</html>
