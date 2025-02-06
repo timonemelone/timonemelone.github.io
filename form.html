@@ -422,20 +422,12 @@
       transitionToResult(resultNo, populateResultNo);
     });
     
-    function restartQuiz() {
-      currentQuestion = 0;
-      questionNumberEl.textContent = questions[0].number;
-      questionTextEl.textContent   = questions[0].text;
-      backButton.disabled = true;
-      resultJa.classList.add('hidden');
-      resultNo.classList.add('hidden');
-      questionContainer.classList.remove('hidden');
-      questionContainer.classList.remove('fade-out');
-      questionContainer.classList.add('fade-in');
-    }
-    
-    restartButtonJa.addEventListener('click', restartQuiz);
-    restartButtonNo.addEventListener('click', restartQuiz);
+    restartButtonJa.addEventListener('click', function() {
+      window.location.href = "index.html";  // Weiterleitung zur Startseite bei Ergebnis "Ja"
+    });
+    restartButtonNo.addEventListener('click', function() {
+      window.location.href = "index.html";  // Weiterleitung zur Startseite bei Ergebnis "Nein"
+    });
   </script>
 </body>
 </html>
