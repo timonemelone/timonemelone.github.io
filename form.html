@@ -1,22 +1,36 @@
+<!--
+Dieses Projekt ist freie Software: Sie können es unter den Bedingungen der GNU General Public License,
+wie von der Free Software Foundation veröffentlicht, weiterverbreiten und/oder modifizieren,
+entweder gemäß Version 3 der Lizenz oder (nach Ihrer Wahl) jeder späteren Version.
+
+Dieses Projekt wird ohne jede Garantie bereitgestellt; sogar ohne die implizite Garantie der
+Marktfähigkeit oder der Eignung für einen bestimmten Zweck. Siehe die GNU General Public License
+für weitere Details.
+
+Copyright (C) 2025 Timon
+Vollständige Lizenz: https://www.gnu.org/licenses/gpl-3.0.html
+-->
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Radikal-O-Mat</title>
-  <!-- Google Font Montserrat -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,800&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      background-color: #FFF8F8; 
-      color: #333333; 
+      background-color: #FFF8F8;
+      color: #333333;
       font-family: 'Montserrat', sans-serif;
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;;
       align-items: center;
       min-height: 100vh;
+      flex-direction: column;
+      padding-top: 200px;
     }
     .container {
       max-width: 600px;
@@ -26,11 +40,12 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       text-align: center;
+      margin-bottom: 200px;
     }
     h2 {
       font-size: 36px;
       font-weight: 700;
-      color: #D32F2F; /* Kräftiges Rot */
+      color: #D32F2F;
       margin-bottom: 20px;
     }
     #static-label { }
@@ -61,40 +76,38 @@
       cursor: not-allowed;
     }
     .chart {
-      margin-bottom: 30px; 
+      margin-bottom: 30px;
       animation: fadeIn 0.5s ease;
-      text-align: left; 
+      text-align: left;
     }
-    
     .bar-header {
-      width: 281px;           
-      margin-bottom: 5px;     
-      text-align: left;       
+      width: 281px;
+      margin-bottom: 5px;
+      text-align: left;
     }
     .bar-icon {
-      max-height: 50px;       
+      max-height: 50px;
       display: block;
     }
-    
     .bar-item {
       display: flex;
-      align-items: flex-start; 
+      align-items: flex-start;
     }
-    
     .bar-container {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      width: flex;
+      width: 250px;
       margin-left: 0;
       padding-right: 40px;
     }
     .bar {
-      flex: none;             
+      flex: none;
       height: 20px;
       border-radius: 4px;
-      width: 0;               
-      transition: none;        
+      width: 0;
+      transition: none;
+      margin-right: 5px;
     }
     .bar-value {
       margin-left: 10px;
@@ -102,7 +115,6 @@
       min-width: 40px;
       text-align: right;
     }
-    
     .fade-in {
       animation: fadeIn 0.5s ease forwards;
     }
@@ -111,19 +123,18 @@
     }
     @keyframes fadeIn {
       from { opacity: 0; }
-      to   { opacity: 1; }
+      to { opacity: 1; }
     }
     @keyframes fadeOut {
       from { opacity: 1; }
-      to   { opacity: 0; }
+      to { opacity: 0; }
     }
-    
     @keyframes flipOut {
-      0%   { transform: rotateX(0deg); opacity: 1; }
+      0% { transform: rotateX(0deg); opacity: 1; }
       100% { transform: rotateX(90deg); opacity: 0; }
     }
     @keyframes flipIn {
-      0%   { transform: rotateX(90deg); opacity: 0; }
+      0% { transform: rotateX(90deg); opacity: 0; }
       100% { transform: rotateX(0deg); opacity: 1; }
     }
     .flip-out {
@@ -132,20 +143,87 @@
     .flip-in {
       animation: flipIn 0.5s ease forwards;
     }
-    
     @keyframes slideInRight {
       from { transform: translateX(100%); opacity: 0; }
-      to   { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(0); opacity: 1; }
     }
     @keyframes slideInLeft {
       from { transform: translateX(-100%); opacity: 0; }
-      to   { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(0); opacity: 1; }
     }
     .slide-in-right {
       animation: slideInRight 0.5s ease forwards;
     }
     .slide-in-left {
       animation: slideInLeft 0.5s ease forwards;
+    }
+    footer {
+      width: 100%;
+      background-color: #D32F2F;
+      color: #FFFFFF;
+      padding: 20px 0;
+      text-align: center;
+    }
+    .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .footer-section {
+      flex: 1;
+      min-width: 150px;
+      margin: 10px;
+    }
+    .footer-section h3 {
+      font-size: 18px;
+      margin-top: 0;
+      font-weight: 700;
+    }
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-section ul li {
+      margin: 5px 0;
+    }
+    .footer-section ul li a {
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .footer-section ul li a:hover {
+      text-decoration: underline;
+    }
+    .footer-section p {
+      font-size: 14px;
+      margin: 0;
+      line-height: 1.4;
+    }
+    .footer-bottom {
+      margin-top: 10px;
+    }
+    .footer-bottom p {
+      font-size: 12px;
+      margin: 0;
+    }
+    .footer-bottom ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-bottom ul li {
+      margin: 5px 0;
+    }
+    .footer-bottom ul li a {
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .footer-bottom ul li a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -164,31 +242,67 @@
         <button id="no-button" class="btn">Nein</button>
       </div>
     </div>
-    
     <div id="result-ja" class="result-container hidden">
       <h2>Ergebnis</h2>
       <div id="chart-container-ja"></div>
       <button id="restart-button-ja" class="btn">Zurück</button>
     </div>
-    
     <div id="result-no" class="result-container hidden">
       <h2>Ergebnis</h2>
       <div id="chart-container-no"></div>
       <button id="restart-button-no" class="btn">Zurück</button>
     </div>
   </div>
-  
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Links</h3>
+        <ul>
+          <li><a href="https://www.die-linke.de/bundestagswahl-2025/">Bundestagswahl</a></li>
+          <li><a href="https://www.dielinke-soe.de/partei/#spenden">Spenden</a></li>
+          <li><a href="https://www.die-linke.de/mitmachen/">Mitmachen</a></li>
+          <li><a href="https://github.com/timonemelone/timonemelone.github.io">Dieses Projekt auf GitHub</a></li>
+          <li><a href="https://www.die-linke.de/bundestagswahl-2025/">Bundestagswahl</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Social Media</h3>
+        <ul>
+          <li><a href="https://www.facebook.com/dielinkesoe/">Facebook</a></li>
+          <li><a href="https://www.twitter.com/LinkeSOE">Twitter</a></li>
+          <li><a href="https://www.instagram.com/dielinke.soe">Instagram</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Impressum</h3>
+        <p>
+          Inhaltlich verantwortlich:<br>
+          DIE LINKE. Sächsische Schweiz/<br>
+          Osterzgebirge<br>
+          Timon May<br>
+          Lauterbachstraße 4<br>
+          01796 Pirna<br><br>
+          kontakt@dielinke-soe.de<br>
+          mail@timon-may.de
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Timon May</p>
+      <p>Dieses Projekt steht unter der <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GNU General Public License Version 3</a>.</p>
+    </div>
+  </footer>
   <script>
     const questions = [
-      { number: "1:",  text: "Verdienen sie weniger als 180.000€ Brutto im Jahr?" },
-      { number: "2:",  text: "Wollen sie Menschenrechte?" },
-      { number: "3:",  text: "Halten sie Rassismus für unmenschlich?" },
-      { number: "4:",  text: "Wollen sie, dass die Erde in 50 Jahren noch Lebenswert ist?" },
-      { number: "5:",  text: "Wollen sie bessere Lebensbedingungen?" },
-      { number: "6:",  text: "Wollen sie bessere Arbeitsbedingungen?" },
-      { number: "7:",  text: "Wollen sie ihre Miete bezahlen können?" },
-      { number: "8:",  text: "Wollen sie eine Rente?" },
-      { number: "9:",  text: "Wollen sie einen guten ÖPNV?" },
+      { number: "1:", text: "Verdienen sie weniger als 180.000€ Brutto im Jahr?" },
+      { number: "2:", text: "Wollen sie Menschenrechte?" },
+      { number: "3:", text: "Halten sie Rassismus für unmenschlich?" },
+      { number: "4:", text: "Wollen sie, dass die Erde in 50 Jahren noch Lebenswert ist?" },
+      { number: "5:", text: "Wollen sie bessere Lebensbedingungen?" },
+      { number: "6:", text: "Wollen sie bessere Arbeitsbedingungen?" },
+      { number: "7:", text: "Wollen sie ihre Miete bezahlen können?" },
+      { number: "8:", text: "Wollen sie eine Rente?" },
+      { number: "9:", text: "Wollen sie einen guten ÖPNV?" },
       { number: "10:", text: "Wollen sie keine totale Überwachung?" },
       { number: "11:", text: "Sind sie für Geschlechter- gleichheit?" },
       { number: "12:", text: "Sollten Queere Menschen Rechte haben?" },
@@ -196,7 +310,6 @@
       { number: "14:", text: "Sind sie Antifaschist*in?" },
       { number: "15:", text: "Wollen sie bessere Bildung?" }
     ];
-    
     const barsConfigJa = [
       { label: "Die Linke", value: 100, color: "#ff0000", icon: "media/linke.png" },
       { label: "Bündnis 90 / Die Grünen", value: 35, color: "#008000", icon: "media/gruene.png" },
@@ -206,7 +319,6 @@
       { label: "Union", value: 0, color: "#000000", icon: "media/union.png" },
       { label: "AfD", value: 0, color: "#0000ff", icon: "media/afd.png" }
     ];
-    
     const barsConfigNo = [
       { label: "Afd", value: 100, color: "#0000ff", icon: "media/afd.png" },
       { label: "Union", value: 88, color: "#000000", icon: "media/union.png" },
@@ -216,22 +328,19 @@
       { label: "Bündnis 90 / Die Grünen", value: 15, color: "#008000", icon: "media/gruene.png" },
       { label: "Die Linke", value: 0, color: "#ff0000", icon: "media/linke.png" }
     ];
-    
     let currentQuestion = 0;
-    
     const questionNumberEl = document.getElementById('question-number');
-    const questionTextEl   = document.getElementById('question-text');
+    const questionTextEl = document.getElementById('question-text');
     const questionContainer = document.getElementById('question-container');
-    const yesButton   = document.getElementById('yes-button');
-    const noButton    = document.getElementById('no-button');
-    const backButton  = document.getElementById('back-button');
-    const resultJa    = document.getElementById('result-ja');
-    const resultNo    = document.getElementById('result-no');
+    const yesButton = document.getElementById('yes-button');
+    const noButton = document.getElementById('no-button');
+    const backButton = document.getElementById('back-button');
+    const resultJa = document.getElementById('result-ja');
+    const resultNo = document.getElementById('result-no');
     const chartContainerJa = document.getElementById('chart-container-ja');
     const chartContainerNo = document.getElementById('chart-container-no');
-    const restartButtonJa  = document.getElementById('restart-button-ja');
-    const restartButtonNo  = document.getElementById('restart-button-no');
-    
+    const restartButtonJa = document.getElementById('restart-button-ja');
+    const restartButtonNo = document.getElementById('restart-button-no');
     function animateQuestionNumber(newNumber) {
       questionNumberEl.classList.remove('flip-in', 'flip-out');
       questionNumberEl.classList.add('flip-out');
@@ -250,7 +359,6 @@
         }
       });
     }
-    
     function animateQuestionText(newText, direction) {
       questionTextEl.classList.remove('slide-in-right', 'slide-in-left');
       void questionTextEl.offsetWidth;
@@ -261,14 +369,12 @@
         questionTextEl.classList.add('slide-in-left');
       }
     }
-    
     function changeQuestion(newIndex, direction) {
       animateQuestionNumber(questions[newIndex].number);
       animateQuestionText(questions[newIndex].text, direction);
       currentQuestion = newIndex;
       backButton.disabled = (currentQuestion === 0);
     }
-    
     function transitionToResult(resultContainer, populateResultCallback) {
       questionContainer.classList.add('fade-out');
       questionContainer.addEventListener('animationend', function handler(e) {
@@ -282,60 +388,11 @@
         }
       });
     }
-    
     function populateResultJa() {
       chartContainerJa.innerHTML = '';
       barsConfigJa.forEach(config => {
         const chartItem = document.createElement('div');
         chartItem.classList.add('chart');
-    
-        const headerContainer = document.createElement('div');
-        headerContainer.classList.add('bar-header');
-        headerContainer.style.width = '281px';
-        headerContainer.style.margin = '0 0 5px 0'; 
-        headerContainer.style.textAlign = 'left';
-        if (config.icon) {
-          const iconImg = document.createElement('img');
-          iconImg.classList.add('bar-icon');
-          iconImg.src = config.icon;
-          iconImg.style.maxHeight = '50px';
-          iconImg.style.display = 'block';
-          iconImg.style.margin = '0';
-          headerContainer.appendChild(iconImg);
-        }
-        chartItem.appendChild(headerContainer);
-    
-        
-        const barContainer = document.createElement('div');
-        barContainer.classList.add('bar-container');
-        barContainer.style.display = 'flex';
-        barContainer.style.alignItems = 'center';
-        barContainer.style.justifyContent = 'flex-start';
-    
-        const barEl = document.createElement('div');
-        barEl.classList.add('bar');
-        barEl.style.backgroundColor = config.color;
-        barEl.style.width = config.value + '%';
-    
-        const valueEl = document.createElement('span');
-        valueEl.classList.add('bar-value');
-        valueEl.textContent = config.value + "%";
-    
-        barContainer.appendChild(barEl);
-        barContainer.appendChild(valueEl);
-        chartItem.appendChild(barContainer);
-    
-        chartContainerJa.appendChild(chartItem);
-      });
-    }
-    
-    
-    function populateResultNo() {
-      chartContainerNo.innerHTML = '';
-      barsConfigNo.forEach(config => {
-        const chartItem = document.createElement('div');
-        chartItem.classList.add('chart');
-    
         const headerContainer = document.createElement('div');
         headerContainer.classList.add('bar-header');
         headerContainer.style.width = '281px';
@@ -351,29 +408,66 @@
           headerContainer.appendChild(iconImg);
         }
         chartItem.appendChild(headerContainer);
-    
         const barContainer = document.createElement('div');
         barContainer.classList.add('bar-container');
         barContainer.style.display = 'flex';
         barContainer.style.alignItems = 'center';
         barContainer.style.justifyContent = 'flex-start';
-    
+        barContainer.style.width = '250px';
+        barContainer.style.marginLeft = '0';
         const barEl = document.createElement('div');
         barEl.classList.add('bar');
         barEl.style.backgroundColor = config.color;
         barEl.style.width = config.value + '%';
-    
         const valueEl = document.createElement('span');
         valueEl.classList.add('bar-value');
         valueEl.textContent = config.value + "%";
-    
+        barContainer.appendChild(barEl);
+        barContainer.appendChild(valueEl);
+        chartItem.appendChild(barContainer);
+        chartContainerJa.appendChild(chartItem);
+      });
+    }
+    function populateResultNo() {
+      chartContainerNo.innerHTML = '';
+      barsConfigNo.forEach(config => {
+        const chartItem = document.createElement('div');
+        chartItem.classList.add('chart');
+        const headerContainer = document.createElement('div');
+        headerContainer.classList.add('bar-header');
+        headerContainer.style.width = '281px';
+        headerContainer.style.margin = '0 0 5px 0';
+        headerContainer.style.textAlign = 'left';
+        if (config.icon) {
+          const iconImg = document.createElement('img');
+          iconImg.classList.add('bar-icon');
+          iconImg.src = config.icon;
+          iconImg.style.maxHeight = '50px';
+          iconImg.style.display = 'block';
+          iconImg.style.margin = '0';
+          headerContainer.appendChild(iconImg);
+        }
+        chartItem.appendChild(headerContainer);
+        const barContainer = document.createElement('div');
+        barContainer.classList.add('bar-container');
+        barContainer.style.display = 'flex';
+        barContainer.style.alignItems = 'center';
+        barContainer.style.justifyContent = 'flex-start';
+        barContainer.style.width = '250px';
+        barContainer.style.marginLeft = '0';
+        const barEl = document.createElement('div');
+        barEl.classList.add('bar');
+        barEl.style.backgroundColor = config.color;
+        barEl.style.width = config.value + '%';
+        const valueEl = document.createElement('span');
+        valueEl.classList.add('bar-value');
+        valueEl.textContent = config.value + "%";
         barContainer.appendChild(barEl);
         barContainer.appendChild(valueEl);
         chartItem.appendChild(barContainer);
         chartContainerNo.appendChild(chartItem);
       });
     }
-    
     yesButton.addEventListener('click', function() {
       if (currentQuestion === questions.length - 1) {
         transitionToResult(resultJa, populateResultJa);
@@ -381,13 +475,6 @@
         changeQuestion(currentQuestion + 1, "forward");
       }
     });
-    
-    backButton.addEventListener('click', function() {
-      if (currentQuestion > 0) {
-        changeQuestion(currentQuestion - 1, "backward");
-      }
-    });
-
     backButton.addEventListener('click', function() {
       if (currentQuestion === 0) {
         window.location.href = "index.html";
@@ -395,17 +482,14 @@
         changeQuestion(currentQuestion - 1, "backward");
       }
     });
-
-    
     noButton.addEventListener('click', function() {
       transitionToResult(resultNo, populateResultNo);
     });
-    
     restartButtonJa.addEventListener('click', function() {
-      window.location.href = "index.html";  
+      window.location.href = "index.html";
     });
     restartButtonNo.addEventListener('click', function() {
-      window.location.href = "index.html";  
+      window.location.href = "index.html";
     });
   </script>
 </body>

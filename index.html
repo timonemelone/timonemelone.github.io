@@ -4,30 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Radikal-O-Mat</title>
-  <!-- Google Font Montserrat -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700,800&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #D32F2F; /* Kräftiges Rot */
-      color: #FFFFFF; /* Weißer Text */
-      font-family: 'Montserrat', sans-serif;
       margin: 0;
       padding: 0;
+      background-color: #D32F2F;
+      color: #FFFFFF;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+    .content {
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
     }
     h1 {
       font-size: 60px;
-      font-weight: 700; /* Bold */
+      font-weight: 700;
       margin: 0;
+      padding: 300px 0;
     }
     h2 {
       font-size: 24px;
-      margin: 10px 0 40px 0;
+      margin: 10px 0 40px;
     }
     button {
       background-color: #FFFFFF;
@@ -38,16 +44,113 @@
       font-size: 20px;
       font-weight: 700;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s ease;
     }
     button:hover {
       background-color: #f0f0f0;
     }
+    footer {
+      background-color: #D32F2F;
+      color: #FFFFFF;
+      padding: 200px 0;
+      text-align: center;
+      width: 100%;
+      margin-top: 60px;
+    }
+    .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .footer-section {
+      flex: 1;
+      min-width: 150px;
+      margin: 10px;
+    }
+    .footer-section h3 {
+      font-size: 16px;
+      margin-top: 0;
+      font-weight: 700;
+    }
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-section ul li {
+      margin: 5px 0;
+    }
+    .footer-section ul li a {
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    .footer-section ul li a:hover {
+      text-decoration: underline;
+    }
+    .footer-section.impressum {
+      text-align: right;
+    }
+    .footer-section p {
+      font-size: 14px;
+      margin: 0;
+      line-height: 1.4;
+    }
+    .footer-bottom {
+      margin-top: 10px;
+    }
+    .footer-bottom p {
+      font-size: 10px;
+      margin: 0;
+    }
   </style>
 </head>
 <body>
-  <h1>Radikal-O-Mat</h1>
-  <h2>Die einzige ehrliche Wahlhilfe</h2>
-  <button onclick="window.location.href='form.html'">Start</button>
+  <div class="content">
+    <h1>Radikal-O-Mat</h1>
+    <h2>Die einzige ehrliche Wahlhilfe</h2>
+    <button onclick="window.location.href='quiz.html'">Start</button>
+  </div>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Links</h3>
+        <ul>
+          <li><a href="https://www.die-linke.de/bundestagswahl-2025/">Bundestagswahl</a></li>
+          <li><a href="https://www.dielinke-soe.de/partei/#spenden">Spenden</a></li>
+          <li><a href="https://www.die-linke.de/mitmachen/">Mitmachen</a></li>
+          <li><a href="https://github.com/timonemelone/timonemelone.github.io">Dieses Projekt auf GitHub</a></li>
+          <li><a href="https://www.die-linke.de/bundestagswahl-2025/">Bundestagswahl</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Social Media</h3>
+        <ul>
+          <li><a href="https://www.facebook.com/dielinkesoe/">Facebook</a></li>
+          <li><a href="https://www.twitter.com/LinkeSOE">Twitter</a></li>
+          <li><a href="https://www.instagram.com/dielinke.soe">Instagram</a></li>
+        </ul>
+      </div>
+      <div class="footer-section impressum">
+        <h3>Impressum</h3>
+        <p>
+          Inhaltlich verantwortlich:<br>
+          DIE LINKE. Sächsische Schweiz/<br>
+          Osterzgebirge<br>
+          Timon May<br>
+          Lauterbachstraße 4<br>
+          01796 Pirna<br><br>
+          kontakt@dielinke-soe.de<br>
+          mail@timon-may.de
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Timon May</p>
+      <p>Dieses Projekt steht unter der <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" style="color: #FFFFFF; text-decoration: none;">GNU General Public License Version 3</a>.</p>
+    </div>
+  </footer>
 </body>
 </html>
